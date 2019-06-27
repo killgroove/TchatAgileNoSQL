@@ -194,6 +194,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Utils\FileUpload.cs" />
+    <Compile Include="Models\Utils\SessionActions.cs" />
     <Compile Include="ParticipantsSalon.cs">
       <DependentUpon>TchatNoSQL.tt</DependentUpon>
     </Compile>
@@ -202,9 +203,6 @@
       <DependentUpon>TchatNoSQL.tt</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
-    <Compile Include="sysdiagrams.cs">
-      <DependentUpon>TchatNoSQL.tt</DependentUpon>
-    </Compile>
     <Compile Include="TchatManager.cs" />
     <Compile Include="TchatNoSQL.Context.cs">
       <AutoGen>True</AutoGen>
@@ -224,12 +222,7 @@
     <Compile Include="UserClassique.cs">
       <DependentUpon>TchatNoSQL.tt</DependentUpon>
     </Compile>
-    <Compile Include="UserFacebook.cs">
-      <DependentUpon>TchatNoSQL.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Utilisateur.cs">
-      <DependentUpon>TchatNoSQL.tt</DependentUpon>
-    </Compile>
+    <Compile Include="DTO\UserDTO.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />

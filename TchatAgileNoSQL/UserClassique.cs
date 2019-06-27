@@ -14,7 +14,16 @@ namespace TchatAgileNoSQL
     
     public partial class UserClassique
     {
-        public int id_user { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public UserClassique()
+        {
+            this.Message = new HashSet<Message>();
+            this.Contacts = new HashSet<Contacts>();
+            this.SalonTchat = new HashSet<SalonTchat>();
+        }
+    
+        public int id_usercl { get; set; }
+        public string email_usercl { get; set; }
         public string pseudo_usercl { get; set; }
         public string password_usercl { get; set; }
         public string nom_usercl { get; set; }
@@ -24,9 +33,12 @@ namespace TchatAgileNoSQL
         public string langue_usercl { get; set; }
         public System.DateTime dateinscription_usercl { get; set; }
         public byte[] avatar_usercl { get; set; }
-        public string email_user { get; set; }
-        public bool isActif_user { get; set; }
     
-        public virtual Utilisateur Utilisateur { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Message> Message { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Contacts> Contacts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SalonTchat> SalonTchat { get; set; }
     }
 }

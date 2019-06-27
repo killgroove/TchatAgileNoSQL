@@ -18,6 +18,8 @@ namespace TchatAgileNoSQL.Controllers
             if (Session["UserID"] == null)
             {
                 // Gérer la connexion en anonyme
+                Session["UserID"] = "69004";
+                Session["username"] = "alex69004";
                 return View(); 
             }
             else
@@ -62,19 +64,19 @@ namespace TchatAgileNoSQL.Controllers
         {
             string email = fc["txtemail"].ToString();
             string password = fc["txtpassword"].ToString();
-            UserClassique user = tchatManager.Login(email, password);
-            if (user.id_user > 0)
+            var user = tchatManager.Login(email, password);
+            if (user.id_usercl > 0)
             {
                 ViewData["status"] = 1;
-                ViewData["msg"] = "login Successful...";
-                Session["username"] = user.email_user;
-                Session["userid"] = user.id_user.ToString();
+                ViewData["msg"] = "Connexion réussie...";
+                Session["username"] = user.email_usercl;
+                Session["userid"] = user.id_usercl.ToString();
                 return RedirectToAction("Index");
             }
             else
             {
                 ViewData["status"] = 2;
-                ViewData["msg"] = "invalid Email or Password...";
+                ViewData["msg"] = "Email ou mot de passe invalie...";
                 return View();
             }
         }
@@ -83,14 +85,14 @@ namespace TchatAgileNoSQL.Controllers
         public JsonResult friendlist()
         {
             int id = Convert.ToInt32(Session["userid"].ToString());
-            List<UserClassique> amis = tchatManager.GetAmis(id);
+            var amis = tchatManager.GetAmis(id);
             List<ListItem> userlist = new List<ListItem>();
             foreach (var ami in amis)
             {
                 userlist.Add(new ListItem
                 {
-                    Value = ami.pseudo_usercl.ToString(),
-                    Text = ami.email_user.ToString()
+                    Value = ami.email_usercl.ToString(),
+                    Text = ami.email_usercl.ToString()
                 });
             }
             return Json(userlist);

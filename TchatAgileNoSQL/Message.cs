@@ -18,12 +18,12 @@ namespace TchatAgileNoSQL
         public string contenu_message { get; set; }
         public int fk_id_user_message { get; set; }
         public System.DateTime datetime_message { get; set; }
-        public Nullable<int> id_user { get; set; }
+        public Nullable<int> id_usercl { get; set; }
         public int id_salon { get; set; }
         public Nullable<int> id_anonyme { get; set; }
     
         public virtual Anonyme Anonyme { get; set; }
         public virtual SalonTchat SalonTchat { get; set; }
-        public virtual Utilisateur Utilisateur { get; set; }
+        public virtual UserClassique UserClassique { get; set; }
     }
 }

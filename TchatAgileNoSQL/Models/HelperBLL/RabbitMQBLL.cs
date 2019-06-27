@@ -14,8 +14,8 @@ namespace TchatAgileNoSQL.Models.HelperBLL
         public IConnection GetConnection()
         {
             ConnectionFactory factory = new ConnectionFactory();
-            factory.UserName = "jayesh";
-            factory.Password = "jayesh";
+            factory.UserName = "guest";
+            factory.Password = "guest";
             factory.Port = 5672;
             factory.HostName = "localhost";
             factory.VirtualHost = "/";

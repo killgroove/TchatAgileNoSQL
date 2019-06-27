@@ -17,7 +17,7 @@ namespace TchatAgileNoSQL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Contacts()
         {
-            this.Utilisateur = new HashSet<Utilisateur>();
+            this.UserClassique = new HashSet<UserClassique>();
         }
     
         public int id_contact { get; set; }
@@ -27,6 +27,6 @@ namespace TchatAgileNoSQL
         public System.DateTime date_acceptation_contact { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Utilisateur> Utilisateur { get; set; }
+        public virtual ICollection<UserClassique> UserClassique { get; set; }
     }
 }

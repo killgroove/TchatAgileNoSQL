@@ -19,7 +19,7 @@ namespace TchatAgileNoSQL
         {
             this.Message = new HashSet<Message>();
             this.ParticipantsSalon = new HashSet<ParticipantsSalon>();
-            this.Utilisateur = new HashSet<Utilisateur>();
+            this.UserClassique = new HashSet<UserClassique>();
         }
     
         public int id_salon { get; set; }
@@ -32,6 +32,6 @@ namespace TchatAgileNoSQL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ParticipantsSalon> ParticipantsSalon { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Utilisateur> Utilisateur { get; set; }
+        public virtual ICollection<UserClassique> UserClassique { get; set; }
     }
 }

@@ -30,9 +30,6 @@ namespace TchatAgileNoSQL
         public virtual DbSet<Message> Message { get; set; }
         public virtual DbSet<ParticipantsSalon> ParticipantsSalon { get; set; }
         public virtual DbSet<SalonTchat> SalonTchat { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<UserClassique> UserClassique { get; set; }
-        public virtual DbSet<UserFacebook> UserFacebook { get; set; }
-        public virtual DbSet<Utilisateur> Utilisateur { get; set; }
     }
 }

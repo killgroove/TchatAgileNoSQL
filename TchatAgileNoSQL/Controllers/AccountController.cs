@@ -17,6 +17,7 @@ namespace TchatAgileNoSQL.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        TchatManager tchatManager = new TchatManager();
 
         public AccountController()
         {
@@ -79,6 +80,9 @@ namespace TchatAgileNoSQL.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    var User = tchatManager.Login(model.Email, model.Password);
+                    Session["UserID"] = User.id_usercl;
+                    Session["username"] = User.email_usercl;
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -156,14 +160,17 @@ namespace TchatAgileNoSQL.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    var User = tchatManager.Register(model.Email, model.Password);
+
+                    Session["UserID"] = User.id_usercl;
+                    Session["username"] = User.email_usercl;
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Tchat");
                 }
                 AddErrors(result);
             }
@@ -392,6 +399,8 @@ namespace TchatAgileNoSQL.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            Session["UserID"] = null;
+            Session["username"] = null;
             return RedirectToAction("Index", "Home");
         }
 
@@ -449,7 +458,7 @@ namespace TchatAgileNoSQL.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Tchat");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

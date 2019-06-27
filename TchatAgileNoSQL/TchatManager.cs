@@ -17,33 +17,35 @@ namespace TchatAgileNoSQL
             //}
         }
 
-        public UserClassique Login(string email, string password)
+        public UserDTO Login(string email, string password)
         {
             using(TchatNoSQLEntities db = new TchatNoSQLEntities())
             {
-                return db.UserClassique
-                    .Where(x => x.email_user == email && x.password_usercl == password)
-                    .Select(x => new UserClassique
+                var user = db.UserClassique
+                    .Where(x => x.email_usercl == email && x.password_usercl == password)
+                    .Select(x => new UserDTO
                     {
-                        id_user = x.id_user,
+                        id_usercl = x.id_usercl,
+                        password_usercl = x.password_usercl,
+                        email_usercl = x.email_usercl,
                         avatar_usercl = x.avatar_usercl,
                         dateinscription_usercl = x.dateinscription_usercl,
-                        password_usercl = x.password_usercl,
-                        email_user = x.email_user,
                         datenaissance_usercl = x.datenaissance_usercl,
-                        isActif_user = x.isActif_user,
                         langue_usercl = x.langue_usercl,
                         nom_usercl = x.nom_usercl,
                         pays_usercl = x.pays_usercl,
                         prenom_usercl = x.prenom_usercl,
                         pseudo_usercl = x.pseudo_usercl
                     }).Single();
+
+                return user;
             }
         }
 
-        public List<UserClassique> GetAmis(int id)
+
+        public List<UserDTO> GetAmis(int id)
         {
-            List<UserClassique> contacts = new List<UserClassique>();
+            List<UserDTO> contacts = new List<UserDTO>();
 
             using(TchatNoSQLEntities db = new TchatNoSQLEntities())
             {
@@ -61,16 +63,15 @@ namespace TchatAgileNoSQL
                 foreach (var idContact in idContacts)
                 {
                     var contact = db.UserClassique
-                        .Where(x => x.id_user == idContact)
-                        .Select(x => new UserClassique
+                        .Where(x => x.id_usercl == idContact)
+                        .Select(x => new UserDTO
                         {
-                            id_user = x.id_user,
+                            id_usercl = x.id_usercl,
                             avatar_usercl = x.avatar_usercl,
                             dateinscription_usercl = x.dateinscription_usercl,
                             password_usercl = x.password_usercl,
-                            email_user = x.email_user,
+                            email_usercl = x.email_usercl,
                             datenaissance_usercl = x.datenaissance_usercl,
-                            isActif_user = x.isActif_user,
                             langue_usercl = x.langue_usercl,
                             nom_usercl = x.nom_usercl,
                             pays_usercl = x.pays_usercl,
@@ -83,6 +84,24 @@ namespace TchatAgileNoSQL
 
                 return contacts;
 
+            }
+        }
+
+        public UserClassique Register(string email, string mdp)
+        {
+            using (TchatNoSQLEntities db = new TchatNoSQLEntities())
+            {
+
+                var user = new UserClassique()
+                {
+                    email_usercl = email,
+                    password_usercl = mdp
+                };
+
+                db.UserClassique.Add(user);
+                db.SaveChanges();
+
+                return user;
             }
         }
 

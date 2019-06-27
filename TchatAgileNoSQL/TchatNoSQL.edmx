@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TchatNoSQLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TchatNoSQLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Anonyme">
           <Key>
             <PropertyRef Name="id_anonyme" />
@@ -15,11 +15,11 @@
         </EntityType>
         <EntityType Name="avoir">
           <Key>
+            <PropertyRef Name="id_usercl" />
             <PropertyRef Name="id_contact" />
-            <PropertyRef Name="id_user" />
           </Key>
+          <Property Name="id_usercl" Type="int" Nullable="false" />
           <Property Name="id_contact" Type="int" Nullable="false" />
-          <Property Name="id_user" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Contacts">
           <Key>
@@ -28,8 +28,8 @@
           <Property Name="id_contact" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="id_demandeur_contact" Type="int" Nullable="false" />
           <Property Name="id_accepteur_contact" Type="int" Nullable="false" />
-          <Property Name="date_demande_contact" Type="datetime" Nullable="false" />
-          <Property Name="date_acceptation_contact" Type="datetime" Nullable="false" />
+          <Property Name="date_demande_contact" Type="datetime2" Precision="7" />
+          <Property Name="date_acceptation_contact" Type="datetime2" Precision="7" />
         </EntityType>
         <EntityType Name="Message">
           <Key>
@@ -39,7 +39,7 @@
           <Property Name="contenu_message" Type="varchar" MaxLength="1000" Nullable="false" />
           <Property Name="fk_id_user_message" Type="int" Nullable="false" />
           <Property Name="datetime_message" Type="datetime" Nullable="false" />
-          <Property Name="id_user" Type="int" />
+          <Property Name="id_usercl" Type="int" />
           <Property Name="id_salon" Type="int" Nullable="false" />
           <Property Name="id_anonyme" Type="int" />
         </EntityType>
@@ -55,11 +55,11 @@
         </EntityType>
         <EntityType Name="participer">
           <Key>
+            <PropertyRef Name="id_usercl" />
             <PropertyRef Name="id_salon" />
-            <PropertyRef Name="id_user" />
           </Key>
+          <Property Name="id_usercl" Type="int" Nullable="false" />
           <Property Name="id_salon" Type="int" Nullable="false" />
-          <Property Name="id_user" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="SalonTchat">
           <Key>
@@ -69,51 +69,23 @@
           <Property Name="nom_salon" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="id_anonyme" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="UserClassique">
           <Key>
-            <PropertyRef Name="id_user" />
+            <PropertyRef Name="id_usercl" />
           </Key>
-          <Property Name="id_user" Type="int" Nullable="false" />
-          <Property Name="pseudo_usercl" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="id_usercl" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="email_usercl" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="pseudo_usercl" Type="varchar" MaxLength="50" />
           <Property Name="password_usercl" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="nom_usercl" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="prenom_usercl" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="datenaissance_usercl" Type="datetime" Nullable="false" />
-          <Property Name="pays_usercl" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="langue_usercl" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="dateinscription_usercl" Type="datetime" Nullable="false" />
+          <Property Name="nom_usercl" Type="varchar" MaxLength="50" />
+          <Property Name="prenom_usercl" Type="varchar" MaxLength="50" />
+          <Property Name="datenaissance_usercl" Type="datetime2" Precision="7" />
+          <Property Name="pays_usercl" Type="varchar" MaxLength="50" />
+          <Property Name="langue_usercl" Type="varchar" MaxLength="50" />
+          <Property Name="dateinscription_usercl" Type="datetime2" Precision="7" />
           <Property Name="avatar_usercl" Type="varbinary(max)" />
-          <Property Name="email_user" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="isActif_user" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="UserFacebook">
-          <Key>
-            <PropertyRef Name="id_user" />
-          </Key>
-          <Property Name="id_user" Type="int" Nullable="false" />
-          <Property Name="photoprofil_userfb" Type="varbinary(max)" Nullable="false" />
-          <Property Name="email_user" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="isActif_user" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Utilisateur">
-          <Key>
-            <PropertyRef Name="id_user" />
-          </Key>
-          <Property Name="id_user" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="email_user" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="isActif_user" Type="bit" Nullable="false" />
-        </EntityType>
-        <Association Name="avoir_Contacts_FK">
+        <Association Name="avoir_Contacts0_FK">
           <End Role="Contacts" Type="Self.Contacts" Multiplicity="1" />
           <End Role="avoir" Type="Self.avoir" Multiplicity="*" />
           <ReferentialConstraint>
@@ -125,15 +97,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="avoir_Utilisateur0_FK">
-          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="1" />
+        <Association Name="avoir_UserClassique_FK">
+          <End Role="UserClassique" Type="Self.UserClassique" Multiplicity="1" />
           <End Role="avoir" Type="Self.avoir" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Utilisateur">
-              <PropertyRef Name="id_user" />
+            <Principal Role="UserClassique">
+              <PropertyRef Name="id_usercl" />
             </Principal>
             <Dependent Role="avoir">
-              <PropertyRef Name="id_user" />
+              <PropertyRef Name="id_usercl" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -161,15 +133,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Message_Utilisateur_FK">
-          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="0..1" />
+        <Association Name="Message_UserClassique_FK">
+          <End Role="UserClassique" Type="Self.UserClassique" Multiplicity="0..1" />
           <End Role="Message" Type="Self.Message" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Utilisateur">
-              <PropertyRef Name="id_user" />
+            <Principal Role="UserClassique">
+              <PropertyRef Name="id_usercl" />
             </Principal>
             <Dependent Role="Message">
-              <PropertyRef Name="id_user" />
+              <PropertyRef Name="id_usercl" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -185,7 +157,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="participer_SalonTchat_FK">
+        <Association Name="participer_SalonTchat0_FK">
           <End Role="SalonTchat" Type="Self.SalonTchat" Multiplicity="1" />
           <End Role="participer" Type="Self.participer" Multiplicity="*" />
           <ReferentialConstraint>
@@ -197,15 +169,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="participer_Utilisateur0_FK">
-          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="1" />
+        <Association Name="participer_UserClassique_FK">
+          <End Role="UserClassique" Type="Self.UserClassique" Multiplicity="1" />
           <End Role="participer" Type="Self.participer" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Utilisateur">
-              <PropertyRef Name="id_user" />
+            <Principal Role="UserClassique">
+              <PropertyRef Name="id_usercl" />
             </Principal>
             <Dependent Role="participer">
-              <PropertyRef Name="id_user" />
+              <PropertyRef Name="id_usercl" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -221,30 +193,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="UserClassique_Utilisateur_FK">
-          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="1" />
-          <End Role="UserClassique" Type="Self.UserClassique" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Utilisateur">
-              <PropertyRef Name="id_user" />
-            </Principal>
-            <Dependent Role="UserClassique">
-              <PropertyRef Name="id_user" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="UserFacebook_Utilisateur_FK">
-          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="1" />
-          <End Role="UserFacebook" Type="Self.UserFacebook" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Utilisateur">
-              <PropertyRef Name="id_user" />
-            </Principal>
-            <Dependent Role="UserFacebook">
-              <PropertyRef Name="id_user" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="TchatNoSQLModelStoreContainer">
           <EntitySet Name="Anonyme" EntityType="Self.Anonyme" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="avoir" EntityType="Self.avoir" Schema="dbo" store:Type="Tables" />
@@ -253,16 +201,13 @@
           <EntitySet Name="ParticipantsSalon" EntityType="Self.ParticipantsSalon" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="participer" EntityType="Self.participer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SalonTchat" EntityType="Self.SalonTchat" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserClassique" EntityType="Self.UserClassique" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserFacebook" EntityType="Self.UserFacebook" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Utilisateur" EntityType="Self.Utilisateur" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="avoir_Contacts_FK" Association="Self.avoir_Contacts_FK">
+          <AssociationSet Name="avoir_Contacts0_FK" Association="Self.avoir_Contacts0_FK">
             <End Role="Contacts" EntitySet="Contacts" />
             <End Role="avoir" EntitySet="avoir" />
           </AssociationSet>
-          <AssociationSet Name="avoir_Utilisateur0_FK" Association="Self.avoir_Utilisateur0_FK">
-            <End Role="Utilisateur" EntitySet="Utilisateur" />
+          <AssociationSet Name="avoir_UserClassique_FK" Association="Self.avoir_UserClassique_FK">
+            <End Role="UserClassique" EntitySet="UserClassique" />
             <End Role="avoir" EntitySet="avoir" />
           </AssociationSet>
           <AssociationSet Name="Message_Anonyme1_FK" Association="Self.Message_Anonyme1_FK">
@@ -273,37 +218,28 @@
             <End Role="SalonTchat" EntitySet="SalonTchat" />
             <End Role="Message" EntitySet="Message" />
           </AssociationSet>
-          <AssociationSet Name="Message_Utilisateur_FK" Association="Self.Message_Utilisateur_FK">
-            <End Role="Utilisateur" EntitySet="Utilisateur" />
+          <AssociationSet Name="Message_UserClassique_FK" Association="Self.Message_UserClassique_FK">
+            <End Role="UserClassique" EntitySet="UserClassique" />
             <End Role="Message" EntitySet="Message" />
           </AssociationSet>
           <AssociationSet Name="ParticipantsSalon_SalonTchat_FK" Association="Self.ParticipantsSalon_SalonTchat_FK">
             <End Role="SalonTchat" EntitySet="SalonTchat" />
             <End Role="ParticipantsSalon" EntitySet="ParticipantsSalon" />
           </AssociationSet>
-          <AssociationSet Name="participer_SalonTchat_FK" Association="Self.participer_SalonTchat_FK">
+          <AssociationSet Name="participer_SalonTchat0_FK" Association="Self.participer_SalonTchat0_FK">
             <End Role="SalonTchat" EntitySet="SalonTchat" />
             <End Role="participer" EntitySet="participer" />
           </AssociationSet>
-          <AssociationSet Name="participer_Utilisateur0_FK" Association="Self.participer_Utilisateur0_FK">
-            <End Role="Utilisateur" EntitySet="Utilisateur" />
+          <AssociationSet Name="participer_UserClassique_FK" Association="Self.participer_UserClassique_FK">
+            <End Role="UserClassique" EntitySet="UserClassique" />
             <End Role="participer" EntitySet="participer" />
           </AssociationSet>
           <AssociationSet Name="SalonTchat_Anonyme_FK" Association="Self.SalonTchat_Anonyme_FK">
             <End Role="Anonyme" EntitySet="Anonyme" />
             <End Role="SalonTchat" EntitySet="SalonTchat" />
           </AssociationSet>
-          <AssociationSet Name="UserClassique_Utilisateur_FK" Association="Self.UserClassique_Utilisateur_FK">
-            <End Role="Utilisateur" EntitySet="Utilisateur" />
-            <End Role="UserClassique" EntitySet="UserClassique" />
-          </AssociationSet>
-          <AssociationSet Name="UserFacebook_Utilisateur_FK" Association="Self.UserFacebook_Utilisateur_FK">
-            <End Role="Utilisateur" EntitySet="Utilisateur" />
-            <End Role="UserFacebook" EntitySet="UserFacebook" />
-          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TchatNoSQLModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -324,9 +260,9 @@
           <Property Name="id_contact" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="id_demandeur_contact" Type="Int32" Nullable="false" />
           <Property Name="id_accepteur_contact" Type="Int32" Nullable="false" />
-          <Property Name="date_demande_contact" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="date_acceptation_contact" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Utilisateur" Relationship="Self.avoir" FromRole="Contacts" ToRole="Utilisateur" />
+          <Property Name="date_demande_contact" Type="DateTime" Precision="7" />
+          <Property Name="date_acceptation_contact" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="UserClassique" Relationship="Self.avoir" FromRole="Contacts" ToRole="UserClassique" />
         </EntityType>
         <EntityType Name="Message">
           <Key>
@@ -336,12 +272,12 @@
           <Property Name="contenu_message" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="fk_id_user_message" Type="Int32" Nullable="false" />
           <Property Name="datetime_message" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="id_user" Type="Int32" />
+          <Property Name="id_usercl" Type="Int32" />
           <Property Name="id_salon" Type="Int32" Nullable="false" />
           <Property Name="id_anonyme" Type="Int32" />
           <NavigationProperty Name="Anonyme" Relationship="Self.Message_Anonyme1_FK" FromRole="Message" ToRole="Anonyme" />
           <NavigationProperty Name="SalonTchat" Relationship="Self.Message_SalonTchat0_FK" FromRole="Message" ToRole="SalonTchat" />
-          <NavigationProperty Name="Utilisateur" Relationship="Self.Message_Utilisateur_FK" FromRole="Message" ToRole="Utilisateur" />
+          <NavigationProperty Name="UserClassique" Relationship="Self.Message_UserClassique_FK" FromRole="Message" ToRole="UserClassique" />
         </EntityType>
         <EntityType Name="ParticipantsSalon">
           <Key>
@@ -364,58 +300,26 @@
           <NavigationProperty Name="Anonyme" Relationship="Self.SalonTchat_Anonyme_FK" FromRole="SalonTchat" ToRole="Anonyme" />
           <NavigationProperty Name="Message" Relationship="Self.Message_SalonTchat0_FK" FromRole="SalonTchat" ToRole="Message" />
           <NavigationProperty Name="ParticipantsSalon" Relationship="Self.ParticipantsSalon_SalonTchat_FK" FromRole="SalonTchat" ToRole="ParticipantsSalon" />
-          <NavigationProperty Name="Utilisateur" Relationship="Self.participer" FromRole="SalonTchat" ToRole="Utilisateur" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="UserClassique" Relationship="Self.participer" FromRole="SalonTchat" ToRole="UserClassique" />
         </EntityType>
         <EntityType Name="UserClassique">
           <Key>
-            <PropertyRef Name="id_user" />
+            <PropertyRef Name="id_usercl" />
           </Key>
-          <Property Name="id_user" Type="Int32" Nullable="false" />
-          <Property Name="pseudo_usercl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_usercl" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="email_usercl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pseudo_usercl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="password_usercl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="nom_usercl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="prenom_usercl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="datenaissance_usercl" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="pays_usercl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="langue_usercl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="dateinscription_usercl" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="nom_usercl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="prenom_usercl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="datenaissance_usercl" Type="DateTime" Precision="7" />
+          <Property Name="pays_usercl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="langue_usercl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="dateinscription_usercl" Type="DateTime" Precision="7" />
           <Property Name="avatar_usercl" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="email_user" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="isActif_user" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Utilisateur" Relationship="Self.UserClassique_Utilisateur_FK" FromRole="UserClassique" ToRole="Utilisateur" />
-        </EntityType>
-        <EntityType Name="UserFacebook">
-          <Key>
-            <PropertyRef Name="id_user" />
-          </Key>
-          <Property Name="id_user" Type="Int32" Nullable="false" />
-          <Property Name="photoprofil_userfb" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
-          <Property Name="email_user" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="isActif_user" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Utilisateur" Relationship="Self.UserFacebook_Utilisateur_FK" FromRole="UserFacebook" ToRole="Utilisateur" />
-        </EntityType>
-        <EntityType Name="Utilisateur">
-          <Key>
-            <PropertyRef Name="id_user" />
-          </Key>
-          <Property Name="id_user" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="email_user" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="isActif_user" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Message" Relationship="Self.Message_Utilisateur_FK" FromRole="Utilisateur" ToRole="Message" />
-          <NavigationProperty Name="UserClassique" Relationship="Self.UserClassique_Utilisateur_FK" FromRole="Utilisateur" ToRole="UserClassique" />
-          <NavigationProperty Name="UserFacebook" Relationship="Self.UserFacebook_Utilisateur_FK" FromRole="Utilisateur" ToRole="UserFacebook" />
-          <NavigationProperty Name="Contacts" Relationship="Self.avoir" FromRole="Utilisateur" ToRole="Contacts" />
-          <NavigationProperty Name="SalonTchat" Relationship="Self.participer" FromRole="Utilisateur" ToRole="SalonTchat" />
+          <NavigationProperty Name="Message" Relationship="Self.Message_UserClassique_FK" FromRole="UserClassique" ToRole="Message" />
+          <NavigationProperty Name="Contacts" Relationship="Self.avoir" FromRole="UserClassique" ToRole="Contacts" />
+          <NavigationProperty Name="SalonTchat" Relationship="Self.participer" FromRole="UserClassique" ToRole="SalonTchat" />
         </EntityType>
         <Association Name="Message_Anonyme1_FK">
           <End Role="Anonyme" Type="Self.Anonyme" Multiplicity="0..1" />
@@ -453,15 +357,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Message_Utilisateur_FK">
-          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="0..1" />
+        <Association Name="Message_UserClassique_FK">
+          <End Role="UserClassique" Type="Self.UserClassique" Multiplicity="0..1" />
           <End Role="Message" Type="Self.Message" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Utilisateur">
-              <PropertyRef Name="id_user" />
+            <Principal Role="UserClassique">
+              <PropertyRef Name="id_usercl" />
             </Principal>
             <Dependent Role="Message">
-              <PropertyRef Name="id_user" />
+              <PropertyRef Name="id_usercl" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -477,37 +381,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="UserClassique_Utilisateur_FK">
-          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="1" />
-          <End Role="UserClassique" Type="Self.UserClassique" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Utilisateur">
-              <PropertyRef Name="id_user" />
-            </Principal>
-            <Dependent Role="UserClassique">
-              <PropertyRef Name="id_user" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="UserFacebook_Utilisateur_FK">
-          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="1" />
-          <End Role="UserFacebook" Type="Self.UserFacebook" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Utilisateur">
-              <PropertyRef Name="id_user" />
-            </Principal>
-            <Dependent Role="UserFacebook">
-              <PropertyRef Name="id_user" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="avoir">
           <End Role="Contacts" Type="Self.Contacts" Multiplicity="*" />
-          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="*" />
+          <End Role="UserClassique" Type="Self.UserClassique" Multiplicity="*" />
         </Association>
         <Association Name="participer">
           <End Role="SalonTchat" Type="Self.SalonTchat" Multiplicity="*" />
-          <End Role="Utilisateur" Type="Self.Utilisateur" Multiplicity="*" />
+          <End Role="UserClassique" Type="Self.UserClassique" Multiplicity="*" />
         </Association>
         <EntityContainer Name="TchatNoSQLEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Anonyme" EntityType="Self.Anonyme" />
@@ -515,10 +395,7 @@
           <EntitySet Name="Message" EntityType="Self.Message" />
           <EntitySet Name="ParticipantsSalon" EntityType="Self.ParticipantsSalon" />
           <EntitySet Name="SalonTchat" EntityType="Self.SalonTchat" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="UserClassique" EntityType="Self.UserClassique" />
-          <EntitySet Name="UserFacebook" EntityType="Self.UserFacebook" />
-          <EntitySet Name="Utilisateur" EntityType="Self.Utilisateur" />
           <AssociationSet Name="Message_Anonyme1_FK" Association="Self.Message_Anonyme1_FK">
             <End Role="Anonyme" EntitySet="Anonyme" />
             <End Role="Message" EntitySet="Message" />
@@ -531,29 +408,21 @@
             <End Role="SalonTchat" EntitySet="SalonTchat" />
             <End Role="Message" EntitySet="Message" />
           </AssociationSet>
-          <AssociationSet Name="Message_Utilisateur_FK" Association="Self.Message_Utilisateur_FK">
-            <End Role="Utilisateur" EntitySet="Utilisateur" />
+          <AssociationSet Name="Message_UserClassique_FK" Association="Self.Message_UserClassique_FK">
+            <End Role="UserClassique" EntitySet="UserClassique" />
             <End Role="Message" EntitySet="Message" />
           </AssociationSet>
           <AssociationSet Name="ParticipantsSalon_SalonTchat_FK" Association="Self.ParticipantsSalon_SalonTchat_FK">
             <End Role="SalonTchat" EntitySet="SalonTchat" />
             <End Role="ParticipantsSalon" EntitySet="ParticipantsSalon" />
           </AssociationSet>
-          <AssociationSet Name="UserClassique_Utilisateur_FK" Association="Self.UserClassique_Utilisateur_FK">
-            <End Role="Utilisateur" EntitySet="Utilisateur" />
-            <End Role="UserClassique" EntitySet="UserClassique" />
-          </AssociationSet>
-          <AssociationSet Name="UserFacebook_Utilisateur_FK" Association="Self.UserFacebook_Utilisateur_FK">
-            <End Role="Utilisateur" EntitySet="Utilisateur" />
-            <End Role="UserFacebook" EntitySet="UserFacebook" />
-          </AssociationSet>
           <AssociationSet Name="avoir" Association="Self.avoir">
             <End Role="Contacts" EntitySet="Contacts" />
-            <End Role="Utilisateur" EntitySet="Utilisateur" />
+            <End Role="UserClassique" EntitySet="UserClassique" />
           </AssociationSet>
           <AssociationSet Name="participer" Association="Self.participer">
             <End Role="SalonTchat" EntitySet="SalonTchat" />
-            <End Role="Utilisateur" EntitySet="Utilisateur" />
+            <End Role="UserClassique" EntitySet="UserClassique" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -589,7 +458,7 @@
                 <ScalarProperty Name="contenu_message" ColumnName="contenu_message" />
                 <ScalarProperty Name="fk_id_user_message" ColumnName="fk_id_user_message" />
                 <ScalarProperty Name="datetime_message" ColumnName="datetime_message" />
-                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="id_usercl" ColumnName="id_usercl" />
                 <ScalarProperty Name="id_salon" ColumnName="id_salon" />
                 <ScalarProperty Name="id_anonyme" ColumnName="id_anonyme" />
               </MappingFragment>
@@ -615,21 +484,11 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="TchatNoSQLModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="UserClassique">
             <EntityTypeMapping TypeName="TchatNoSQLModel.UserClassique">
               <MappingFragment StoreEntitySet="UserClassique">
-                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="id_usercl" ColumnName="id_usercl" />
+                <ScalarProperty Name="email_usercl" ColumnName="email_usercl" />
                 <ScalarProperty Name="pseudo_usercl" ColumnName="pseudo_usercl" />
                 <ScalarProperty Name="password_usercl" ColumnName="password_usercl" />
                 <ScalarProperty Name="nom_usercl" ColumnName="nom_usercl" />
@@ -639,27 +498,6 @@
                 <ScalarProperty Name="langue_usercl" ColumnName="langue_usercl" />
                 <ScalarProperty Name="dateinscription_usercl" ColumnName="dateinscription_usercl" />
                 <ScalarProperty Name="avatar_usercl" ColumnName="avatar_usercl" />
-                <ScalarProperty Name="email_user" ColumnName="email_user" />
-                <ScalarProperty Name="isActif_user" ColumnName="isActif_user" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserFacebook">
-            <EntityTypeMapping TypeName="TchatNoSQLModel.UserFacebook">
-              <MappingFragment StoreEntitySet="UserFacebook">
-                <ScalarProperty Name="id_user" ColumnName="id_user" />
-                <ScalarProperty Name="photoprofil_userfb" ColumnName="photoprofil_userfb" />
-                <ScalarProperty Name="email_user" ColumnName="email_user" />
-                <ScalarProperty Name="isActif_user" ColumnName="isActif_user" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Utilisateur">
-            <EntityTypeMapping TypeName="TchatNoSQLModel.Utilisateur">
-              <MappingFragment StoreEntitySet="Utilisateur">
-                <ScalarProperty Name="id_user" ColumnName="id_user" />
-                <ScalarProperty Name="email_user" ColumnName="email_user" />
-                <ScalarProperty Name="isActif_user" ColumnName="isActif_user" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -667,16 +505,16 @@
             <EndProperty Name="Contacts">
               <ScalarProperty Name="id_contact" ColumnName="id_contact" />
             </EndProperty>
-            <EndProperty Name="Utilisateur">
-              <ScalarProperty Name="id_user" ColumnName="id_user" />
+            <EndProperty Name="UserClassique">
+              <ScalarProperty Name="id_usercl" ColumnName="id_usercl" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="participer" TypeName="TchatNoSQLModel.participer" StoreEntitySet="participer">
             <EndProperty Name="SalonTchat">
               <ScalarProperty Name="id_salon" ColumnName="id_salon" />
             </EndProperty>
-            <EndProperty Name="Utilisateur">
-              <ScalarProperty Name="id_user" ColumnName="id_user" />
+            <EndProperty Name="UserClassique">
+              <ScalarProperty Name="id_usercl" ColumnName="id_usercl" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>
